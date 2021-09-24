@@ -1,8 +1,14 @@
-import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen'
+import React, { useEffect } from 'react';
+import { View, Text } from 'react-native'
 
-export default function App() {
+const App = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, [])
   return (
-    <NavigationContainer>{/* Rest of your app code */}</NavigationContainer>
+    <View></View>
   );
 }
+
+export default App
