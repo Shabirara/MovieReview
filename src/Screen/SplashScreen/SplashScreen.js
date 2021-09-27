@@ -1,38 +1,10 @@
-import React, { useEffect } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { moderateScale } from "react-native-size-matters";
-import {
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from "react-native-responsive-screen";
+import React from "react";
+import { View, Text } from "react-native";
 
-const Splash = ({ navigation }) => {
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.replace("Login");
-    }, 2000);
-  }, [navigation]);
-
+export default function SplashScreen() {
   return (
-    <View style={styles.container}>
-      <Image source={require("../../Assets/Images/moviereviewikon.png")} />
+    <View>
+      <Text></Text>
     </View>
   );
-};
-
-export default Splash;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoText: {
-    color: "white",
-    fontFamily: "Schoolbell-Regular",
-    fontSize: 18,
-    textAlign: "center",
-  },
-});
+}
