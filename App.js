@@ -30,7 +30,7 @@ const App = () => {
     </NavigationContainer>
   );
 };
-
+//tambahin lagi stack screenya
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
