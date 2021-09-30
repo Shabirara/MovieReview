@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, Image } from "react-native";
+import { StyleSheet, Text, View, TextInput, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import {moderateScale} from 'react-native-size-matters';
 import {
@@ -16,13 +16,12 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    dispatch(
-      postLoginUser({
-        email,
-        password,
-      })
-    );
+  const onLogin = () => {
+    if (email === "" && password == "") {
+      props.navigation.navigate("HomePage");
+    } else {
+      Alert.alert("Eror", "Email dan Password Salah");
+    }
   };
 
   return (
@@ -61,7 +60,7 @@ export default function Login(props) {
       </Text>
       <View style={styles.buttonContainer}>
         <View style={styles.viewButton}>
-          <Tombol onPress={handleLogin} judul="Sign In" />
+          <Tombol onPress={onLogin} judul="Sign In" />
           {/* <Tombol onPress={() => props.navigation.navigate('BottomTab')} judul="Emergency Button" /> */}
         </View>
       </View>
