@@ -13,6 +13,9 @@ const Homepage = props => {
     const MoveToDetail = () => {
         props.navigation.navigate('DetailMovie')
     };
+    const MoveToAllReviews = () => {
+        props.navigation.navigate('All Reviews')
+    }
 
     const [search, setSearch] = useState('');
     const [activeButton, setActiveButton] = useState(0);
@@ -26,7 +29,6 @@ const Homepage = props => {
         if (activeButton == i)
             return 'Hot {e} Movies';
         return null;
-
     }
 
     return (
@@ -85,7 +87,7 @@ const Homepage = props => {
                                     }
                                     title='123'
                                     titleStyle={{ color: 'black' }}
-
+                                    onPress={MoveToAllReviews}
                                 >
                                 </Button>
                                 <Button
