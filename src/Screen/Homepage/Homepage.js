@@ -9,20 +9,10 @@ import { SearchBar, Card, Icon, Button } from 'react-native-elements';
 import { ms } from 'react-native-size-matters';
 
 
-
 const Homepage = props => {
-    // state = {  <<< ini punya class component
-    //   search: '',
-    // };
-
-    // updateSearch = (search) => { <<< ini punya class component
-    //   this.setState({
-    //     search
-    //   });
-    // };
-
-    // const { search } = this.state;  << ini punya claass component
-
+    const MoveToDetail = () => {
+        props.navigation.navigate('DetailMovie')
+    };
 
     const [search, setSearch] = useState('');
     const [activeButton, setActiveButton] = useState(0);
@@ -80,11 +70,14 @@ const Homepage = props => {
                             })}
                         </View>
                         <Text style={styles.bestGenre}>Hot Movies</Text>
+
+                    </View>
+                    <TouchableOpacity onPress={MoveToDetail}>
                         <Card containerStyle={styles.card}>
-                            <Image source={require('../../Assets/Image/Movie.png')} />
+                            <Card.Image source={require('../../Assets/Image/Movie.png')} />
                             <Text style={styles.summary}>A poor family, the Kims, con their way into becoming the servants of a rich family, the Parks. But their easy life gets complicated when their deception is threatened with exposure.</Text>
                             <Card.Divider />
-                            <View style={styles.header}>
+                            <View style={styles.reviewShare}>
                                 <Button
                                     type='clear'
                                     icon={
@@ -104,7 +97,7 @@ const Homepage = props => {
                                 </Button>
                             </View>
                         </Card>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </ScrollView >
         </SafeAreaView >
@@ -119,6 +112,13 @@ const styles = StyleSheet.create({
 
     container: {
         paddingHorizontal: ms(20)
+    },
+
+    trailer: {
+        backgroundColor: 'red',
+        alignSelf: 'center',
+        width: '100%'
+
     },
 
     header: {
@@ -161,12 +161,19 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        borderRadius: ms(20)
+        borderRadius: ms(20),
+        marginHorizontal: ms(20)
     },
 
     summary: {
         paddingVertical: ms(20),
         textAlign: 'justify',
+    },
+
+    reviewShare: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: ms(-8)
     }
 })
 
