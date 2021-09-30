@@ -48,7 +48,7 @@ const App = () => {
   const BottomNav = () => {
     return (
       <BottomTab.Navigator
-        initialRouteName="Homepage">
+        initialRouteName="Home">
         <BottomTab.Screen
           headerStyle
           options={{
