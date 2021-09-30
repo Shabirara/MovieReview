@@ -3,13 +3,13 @@ import React from "react";
 import { useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 
-import Register from "./src/Screen/Register/Register";
 import Login from "./src/Screen/Login/Login";
+import Register from "./src/Screen/Register/Register";
 
 import SplashScreen from "react-native-splash-screen";
 
 //import navigation
-import { NavigationContainer } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
@@ -18,13 +18,19 @@ const App = () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"
           component={Login}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Register"
+          component={Register}
         />
       </Stack.Navigator>
     </NavigationContainer>
