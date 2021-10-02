@@ -3,22 +3,21 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
-  ScrollView,
   TextInput,
   Alert,
   Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import styles from "../Register/RegisterStyle";
 import { Avatar } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
 
 import { launchImageLibrary } from "react-native-image-picker";
 import { moderateScale } from "react-native-size-matters";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function Register(props) {
+  // console.log("props", props);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -40,6 +39,7 @@ function Register(props) {
   };
 
   const onSubmit = () => {
+    // console.log("nav");
     if (username === "" && email === "" && password === "") {
     } else if (password === email) {
       props.navigation.navigate("HomePage");
@@ -49,7 +49,10 @@ function Register(props) {
   };
 
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView
+      style={styles.window}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <View style={styles.container}>
         <View style={styles.contInput}>
           <View style={styles.contLogo}>
@@ -113,7 +116,6 @@ function Register(props) {
           <View style={styles.centerPos}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate("Login")}
-              style={styles.mainButton}
             >
               <Text style={styles.smallTextButton}>
                 {" "}
@@ -121,18 +123,9 @@ function Register(props) {
               </Text>
             </TouchableOpacity>
           </View>
-          {/* <View style={styles.centerPos}>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate("Login")}
-            >
-              <Text style={styles.smallTextButton}>
-                Already have an account ? Sign In
-              </Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

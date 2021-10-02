@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { moderateScale } from "react-native-size-matters";
+import { ms } from "react-native-size-matters";
 import {
   heightPercentageToDP,
   widthPercentageToDP,
@@ -7,32 +7,31 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
+    flex: ms(0),
     width: widthPercentageToDP(100),
     height: heightPercentageToDP(100),
     backgroundColor: "black",
-    padding: 25,
+    padding: ms(25),
   },
 
   logo: {
-    width: moderateScale(200),
-    height: moderateScale(200),
-    top: moderateScale(56),
-    left: moderateScale(60),
-
-    backgroundColor: "white",
+    width: ms(200),
+    height: ms(200),
+    top: ms(56),
+    left: ms(60),
+    backgroundColor: "black",
   },
   logoText: {
     color: "white",
     top: heightPercentageToDP(8),
     left: widthPercentageToDP(33.5),
     fontFamily: "Schoolbell-Regular",
-    fontSize: 18,
+    fontSize: ms(18),
   },
-  forget: {
+  forgot: {
     backgroundColor: "#000000",
     color: "#FFFFFF",
-    fontSize: 15,
+    fontSize: ms(15),
     top: heightPercentageToDP(17),
     textAlign: "right",
   },
@@ -44,23 +43,23 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   email: {
-    top: 80,
-    left: 20,
+    top: ms(80),
+    left: ms(20),
     color: "red",
     borderColor: "red",
-    borderWidth: 2,
+    borderWidth: ms(2),
   },
   password: {
-    top: 100,
-    left: 20,
+    top: ms(100),
+    left: ms(20),
   },
   input: {
     backgroundColor: "#000000",
     color: "#FFFFFF",
-    fontSize: 15,
+    fontSize: ms(15),
     borderBottomColor: "#FFFFFF",
-    borderBottomWidth: 1,
-    top: 100,
+    borderBottomWidth: ms(1),
+    top: ms(100),
   },
 
   buttonContainer: {

@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import {moderateScale} from 'react-native-size-matters';
-import {
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from "react-native-responsive-screen";
+
 import Tombol from "../../Components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction } from "./Redux/AuthAction";
 
 //import styling
-import styles from "./styles";
+import styles from "./LoginStyle";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const onLogin = () => {
     if (email === "" && password == "") {
-      props.navigation.navigate("HomePage");
+      props.navigation.navigate("Register");
     } else {
       Alert.alert("Eror", "Email dan Password Salah");
     }
@@ -30,7 +30,7 @@ export default function Login(props) {
         source={require("../../Assets/Image/logo.png")}
         style={styles.logo}
       />
-
+      {/* {input email} */}
       <View>
         <TextInput
           value={email}
@@ -41,6 +41,7 @@ export default function Login(props) {
         />
       </View>
       <View>
+        {/* {input passsword} */}
         <TextInput
           value={password}
           onChangeText={setPassword}
@@ -50,7 +51,7 @@ export default function Login(props) {
           secureTextEntry
         />
       </View>
-      <Text style={styles.forget}>Forgot Your Password?</Text>
+      <Text style={styles.forgot}>Forgot Your Password?</Text>
       <Text style={styles.dontHaveAccount}>
         Don't Have an Account?{" "}
         <Text onPress={() => props.navigation.navigate("Register")}>
@@ -58,6 +59,7 @@ export default function Login(props) {
           Sign Up
         </Text>
       </Text>
+
       <View style={styles.buttonContainer}>
         <View style={styles.viewButton}>
           <Tombol onPress={onLogin} judul="Sign In" />

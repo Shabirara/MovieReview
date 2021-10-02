@@ -3,6 +3,9 @@ import React from "react";
 import { useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 
+import { Provider } from "react-redux";
+import { Store } from "./src/Screen/Store/Store";
+
 import Login from "./src/Screen/Login/Login";
 import Register from "./src/Screen/Register/Register";
 
@@ -20,20 +23,22 @@ const App = () => {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={Login}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Register"
-          component={Register}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={Login}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Register"
+            component={Register}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 //tambahin lagi stack screenya
