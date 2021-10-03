@@ -2,27 +2,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Icon, Card, Avatar, Text } from 'react-native-elements'
+import { useSelector } from 'react-redux';
 
 export default function AllReviews() {
-    const [allReviews, setAllReviews] = useState([{}])
-
-    const getAllReviews = async () => {
-        try {
-            const reviews = await axios.get(`https://movieapp-glints.herokuapp.com/api/v1/reviews/movie/7/7`);
-            setAllReviews(reviews.data.data)
-        } catch (error) {
-            console.log(error)
-        };
-    };
-
-    useEffect(() => {
-        getAllReviews();
-    }, [])
+    const data = useSelector((state) => state.HomeReducer.MovieDetail)
 
     return (
         <>
             <ScrollView style={styles.background}>
-                {allReviews.map((e, i) => {
+                {data.map((e, i) => {
                     return (
                         <Card containerStyle={{ borderRadius: 20 }}>
                             <View style={styles.container}>
