@@ -59,8 +59,15 @@ const Homepage = props => {
 
     };
 
-    const MoveToAllReviews = () => {
-        props.navigation.navigate('All Reviews')
+    const MoveToAllReviews = async (e) => {
+        try {
+            const res = await axios.get(`https://movieapp-glints.herokuapp.com/api/v1/reviews/movie/${e.id}/7`);
+            dispatch(MovieDetail(res.data.data));
+
+            props.navigation.navigate('All Reviews');
+        } catch (error) {
+            console.log(error, "errorAllReviews");
+        }
     };
 
     useEffect(() => {
@@ -148,9 +155,8 @@ const Homepage = props => {
                                             icon={
                                                 <Icon name='message-circle' type='feather' />
                                             }
-                                            title='123'
                                             titleStyle={{ color: 'black' }}
-                                            onPress={MoveToAllReviews}
+                                            onPress={() => MoveToAllReviews(e)}
                                         >
                                         </Button>
                                         <Button
