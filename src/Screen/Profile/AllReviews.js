@@ -6,10 +6,19 @@ import { useSelector } from 'react-redux';
 
 export default function AllReviews() {
     const data = useSelector((state) => state.HomeReducer.MovieDetail)
+<<<<<<< HEAD
+=======
+    const [user, setUser] = useState([{}])
+    const [dataUser, setDataUser] = useState([])
+>>>>>>> shabi
 
     return (
         <>
             <ScrollView style={styles.background}>
+<<<<<<< HEAD
+=======
+
+>>>>>>> shabi
                 {data.map((e, i) => {
                     return (
                         <Card containerStyle={{ borderRadius: 20 }}>
@@ -21,14 +30,15 @@ export default function AllReviews() {
 
                                     <View style={styles.review}>
                                         <Icon name='star' color='#F0CA02' />
-                                        <Text style={styles.userReview}>{e.rating}</Text>
-                                        <Text style={styles.perTen}>/5</Text>
-                                        <Text h2 style={styles.title}>Hmm</Text>
+                                        <Text style={styles.userReview}>{e.rating * 2}</Text>
+                                        <Text style={styles.perTen}>/10</Text>
+                                        <Text h2 style={styles.title}>Review</Text>
+
                                     </View>
 
                                     <View style={styles.reviewer}>
                                         <Text>Reviewer: </Text>
-                                        <Text style={styles.user}>user</Text>
+                                        <Text style={styles.user}>{e.User.fullName}</Text>
                                     </View>
 
                                 </View>

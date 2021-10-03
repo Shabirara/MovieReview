@@ -2,9 +2,14 @@
 /* eslint-disable quotes */
 /* eslint-disable semi */
 /* eslint-disable prettier/prettier */
+import axios from 'axios';
 import React, { useState } from 'react'
+<<<<<<< HEAD
 import { SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native'
 import axios from 'axios';
+=======
+import { SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image, Linking } from 'react-native'
+>>>>>>> shabi
 
 import { SearchBar, Card, Icon, Button } from 'react-native-elements';
 import { ms } from 'react-native-size-matters';
@@ -23,6 +28,7 @@ const DetailMovie = props => {
         try {
             const res = await axios.get(`https://movieapp-glints.herokuapp.com/api/v1/reviews/movie/${data.id}/7`);
             dispatch(MovieDetail(res.data.data));
+<<<<<<< HEAD
             props.navigation.navigate('All Reviews')
         } catch (error) {
             console.log(error, "errorAllReviews")
@@ -30,6 +36,14 @@ const DetailMovie = props => {
 
     };
 
+=======
+
+            props.navigation.navigate('All Reviews');
+        } catch (error) {
+            console.log(error, "errorAllReviews");
+        }
+    };
+>>>>>>> shabi
 
     const updateSearch = search => {
         setSearch(search);
@@ -68,7 +82,7 @@ const DetailMovie = props => {
                         <View style={styles.header}>
                             <Text style={styles.filmTitle}>{data.title}</Text>
                             <View style={styles.yearGenre}>
-                                <Text style={styles.yearGenreText}>{data.release}</Text>
+                                <Text style={styles.yearGenreText}>{data.release_date}</Text>
                                 <Text style={styles.yearGenreText}>|</Text>
                                 <Text style={styles.yearGenreText}>{data.name}</Text>
                             </View>
@@ -101,7 +115,6 @@ const DetailMovie = props => {
                                 icon={
                                     <Icon name='message-circle' type='feather' />
                                 }
-                                title='123'
                                 titleStyle={{ color: 'black' }}
                                 buttonStyle={styles.button}
                                 onPress={() => MoveToAllReviews()}
