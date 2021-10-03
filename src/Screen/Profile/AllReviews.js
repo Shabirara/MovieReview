@@ -1,39 +1,57 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Icon, Card, Avatar, Text } from 'react-native-elements'
 
 export default function AllReviews() {
-    // const [dataFilm, setDataFilm] = useState([]);
+    const [allReviews, setAllReviews] = useState([{}])
+
+    const getAllReviews = async () => {
+        try {
+            const reviews = await axios.get(`https://movieapp-glints.herokuapp.com/api/v1/reviews/movie/7/7`);
+            setAllReviews(reviews.data.data)
+        } catch (error) {
+            console.log(error)
+        };
+    };
+
+    useEffect(() => {
+        getAllReviews();
+    }, [])
+
     return (
         <>
             <ScrollView style={styles.background}>
-                <Card containerStyle={{ borderRadius: 20 }}>
-                    <View style={styles.container}>
+                {allReviews.map((e, i) => {
+                    return (
+                        <Card containerStyle={{ borderRadius: 20 }}>
+                            <View style={styles.container}>
 
-                        <Avatar rounded size="medium" source={{ uri: 'https://i.ytimg.com/vi/1Ne1hqOXKKI/maxresdefault.jpg' }} />
+                                <Avatar rounded size="medium" source={{ uri: 'https://i.ytimg.com/vi/1Ne1hqOXKKI/maxresdefault.jpg' }} />
 
+                                <View style={styles.header}>
 
-                        <View style={styles.header}>
+                                    <View style={styles.review}>
+                                        <Icon name='star' color='#F0CA02' />
+                                        <Text style={styles.userReview}>{e.rating}</Text>
+                                        <Text style={styles.perTen}>/5</Text>
+                                        <Text h2 style={styles.title}>Hmm</Text>
+                                    </View>
 
-                            <View style={styles.review}>
-                                <Icon name='star' color='#F0CA02' />
-                                <Text style={styles.userReview}>9</Text>
-                                <Text style={styles.perTen}>/10</Text>
-                                <Text h2 style={styles.title}>Great!</Text>
+                                    <View style={styles.reviewer}>
+                                        <Text>Reviewer: </Text>
+                                        <Text style={styles.user}>user</Text>
+                                    </View>
+
+                                </View>
+
                             </View>
 
-                            <View style={styles.reviewer}>
-                                <Text>Reviewer: </Text>
-                                <Text style={styles.user}>user</Text>
-                            </View>
+                            <Text>{e.comment}</Text>
 
-                        </View>
-
-                    </View>
-
-                    <Text>Hoohohohooho</Text>
-
-                </Card>
+                        </Card>
+                    )
+                })}
 
             </ScrollView>
             <TouchableOpacity style={styles.fab}>

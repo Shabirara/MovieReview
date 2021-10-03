@@ -7,13 +7,18 @@ import { SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity, Ima
 
 import { SearchBar, Card, Icon, Button } from 'react-native-elements';
 import { ms } from 'react-native-size-matters';
+import { Thumbnail } from 'react-native-thumbnail-video';
 
-
+import { useSelector } from 'react-redux';
 
 const DetailMovie = props => {
     const [search, setSearch] = useState('');
-    const [activeButton, setActiveButton] = useState(0);
-    const listGenre = ['Action', 'Romance', 'Thriller', 'Comedy'];
+    const data = useSelector((state) => state.HomeReducer.MovieDetail)
+
+
+    const MoveToAllReviews = () => {
+        props.navigation.navigate('All Reviews')
+    }
 
     const updateSearch = search => {
         setSearch(search);
@@ -36,25 +41,37 @@ const DetailMovie = props => {
                     />
 
                     <Card containerStyle={styles.card}>
-                        <Image style={styles.trailer} source={require('../../Assets/Image/Movie.png')} />
+                        <Thumbnail
+                            url={`${data.trailer}`}
+                            imageWidth={ms(308)}
+                            onPress={() => {
+                                try {
+                                    Linking.openURL(`${data.trailer}`)
+                                }
+                                catch (error) {
+                                    console.log(error)
+                                }
+                            }}
+                            iconStyle={{ tintColor: "#F2D25B" }}
+                        />
                         <View style={styles.header}>
-                            <Text style={styles.filmTitle}>Parasite</Text>
+                            <Text style={styles.filmTitle}>{data.title}</Text>
                             <View style={styles.yearGenre}>
-                                <Text style={styles.yearGenreText}>2019</Text>
+                                <Text style={styles.yearGenreText}>{data.release}</Text>
                                 <Text style={styles.yearGenreText}>|</Text>
-                                <Text style={styles.yearGenreText}>Thriller</Text>
+                                <Text style={styles.yearGenreText}>{data.name}</Text>
                             </View>
                         </View>
                         <Card.Divider />
                         <View style={styles.content}>
-                            <Image style={styles.sideImage} source={require('../../Assets/Image/Movie.png')} />
+                            <Image style={styles.sideImage} source={{ uri: data.poster }} />
                             <View>
                                 <View style={styles.ratings}>
                                     <View style={styles.starDetail}>
                                         <Icon name='star' color='#F0CA02' />
                                         <View style={styles.content}>
-                                            <Text style={styles.userReview}>9</Text>
-                                            <Text style={styles.perTen}>/10</Text>
+                                            <Text style={styles.userReview}>{data.rating}</Text>
+                                            <Text style={styles.perTen}>/5</Text>
                                         </View>
                                     </View>
                                     <TouchableOpacity style={styles.starDetail}>
@@ -62,7 +79,7 @@ const DetailMovie = props => {
                                         <Text style={styles.perTen}>Rate this</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <Text style={styles.summary}>A poor family, the Kims, con their way into becoming the servants of a rich family, the Parks. But their easy life gets complicated when their deception is threatened with exposure.</Text>
+                                <Text style={styles.summary}>{data.synopsis}</Text>
 
                             </View>
                         </View>
@@ -76,6 +93,7 @@ const DetailMovie = props => {
                                 title='123'
                                 titleStyle={{ color: 'black' }}
                                 buttonStyle={styles.button}
+                                onPress={MoveToAllReviews}
                             >
                             </Button>
                             <Button
@@ -91,8 +109,8 @@ const DetailMovie = props => {
                 </View>
             </ScrollView >
         </SafeAreaView >
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     background: {

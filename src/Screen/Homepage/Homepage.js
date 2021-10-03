@@ -2,34 +2,71 @@
 /* eslint-disable quotes */
 /* eslint-disable semi */
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native'
-
+import React, { useState, useEffect } from 'react'
+import { SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image, Linking } from 'react-native'
+import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { MovieDetail } from './Redux/Action';
 import { SearchBar, Card, Icon, Button } from 'react-native-elements';
 import { ms } from 'react-native-size-matters';
+import { Thumbnail } from 'react-native-thumbnail-video'
+import { awaitExpression } from '@babel/types';
 
 
 const Homepage = props => {
-    const MoveToDetail = () => {
-        props.navigation.navigate('DetailMovie')
-    };
-    const MoveToAllReviews = () => {
-        props.navigation.navigate('All Reviews')
-    }
-
+    const dispatch = useDispatch()
+    const [dataFilm, setDataFilm] = useState([{}])
     const [search, setSearch] = useState('');
-    const [activeButton, setActiveButton] = useState(0);
-    const listGenre = ['Action', 'Romance', 'Thriller', 'Comedy'];
+    const [activeGenre, setActiveGenre] = useState(0);
+    const [listGenre, setListGenre] = useState([]);
+    const [namaGenre, setNamaGenre] = useState("");
+
+
+    const getDataFilm = async () => {
+        try {
+            const listFilm = await axios.get(`https://movieapp-glints.herokuapp.com/api/v1/movies/page/1`);
+            setDataFilm(listFilm.data.data.movies)
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    const getListGenre = async () => {
+        try {
+            const genres = await axios.get("https://movieapp-glints.herokuapp.com/api/v1/categories/");
+            setListGenre(genres.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    };
 
     const updateSearch = search => {
         setSearch(search);
+        const searchFilm = dataFilm.filter(film => film.title.toLowerCase().includes(search.toLowerCase()));
+        setDataFilm(searchFilm);
     };
 
-    const hotGenre = i => {
-        if (activeButton == i)
-            return 'Hot {e} Movies';
-        return null;
-    }
+    const MoveToDetail = async (e) => {
+        console.log(e)
+        try {
+            const res = await axios.get(`https://movieapp-glints.herokuapp.com/api/v1/movies/${e.id}`);
+            dispatch(MovieDetail(res.data.data.movie));
+
+            props.navigation.navigate('DetailMovie');
+        } catch (error) {
+            console.log(error, "errorID");
+        }
+
+    };
+
+    const MoveToAllReviews = () => {
+        props.navigation.navigate('All Reviews')
+    };
+
+    useEffect(() => {
+        getDataFilm();
+        getListGenre();
+    }, [])
 
     return (
         <SafeAreaView style={styles.background}>
@@ -52,54 +89,83 @@ const Homepage = props => {
                             <Text style={styles.bestGenre}>Best Genre</Text>
                             <Text style={styles.more}>more >></Text>
                         </View>
-                        <View style={styles.genres}>
+                        <ScrollView horizontal style={styles.genres}>
+
                             {listGenre.map((e, i) => {
+                                const getFilmPerGenre = async () => {
+                                    try {
+                                        const filmPerGenre = await axios.get(`https://movieapp-glints.herokuapp.com/api/v1/movies/${e.name}/page/1`);
+                                        setDataFilm(filmPerGenre.data.data)
+                                    } catch (error) {
+                                        console.log(error)
+                                    };
+                                    setNamaGenre(`${e.name}`);
+                                };
+
                                 return (
                                     <>
                                         <TouchableOpacity
-                                            onPress={() => setActiveButton(i)}
-                                            style={[{
-                                                backgroundColor: activeButton === i ? '#FFC200' : 'white'
-                                            },
-                                            styles.button]}
+                                            onPress={() => { setActiveGenre(i); getFilmPerGenre() }}
+                                            style={
+                                                [{
+                                                    backgroundColor: activeGenre === i ? '#FFC200' : 'white'
+                                                },
+                                                styles.button]}
                                             key={i}>
-                                            <Image source={activeButton === i ? require('../../Assets/Image/Icon.png') : require('../../Assets/Image/Icon(1).png')} style={styles.icon} />
-                                            <Text style={[{ color: activeButton === i ? 'white' : 'black' }, styles.genresText]}>{e}</Text>
+                                            <Image source={activeGenre === i ? require('../../Assets/Image/Icon.png') : require('../../Assets/Image/Icon(1).png')} style={styles.icon} />
+                                            <Text style={[{ color: activeGenre === i ? 'white' : 'black' }, styles.genresText]}>{e.name}</Text>
                                         </TouchableOpacity>
-                                        <Text style={styles.bestGenre}>{hotGenre}</Text>
-                                    </>
-                                )
-                            })}
-                        </View>
-                        <Text style={styles.bestGenre}>Hot Movies</Text>
 
+                                    </>
+                                );
+                            })}
+
+                        </ScrollView>
+                        <Text style={styles.bestGenre}>Hot {namaGenre} Movies</Text>
                     </View>
-                    <TouchableOpacity onPress={MoveToDetail}>
-                        <Card containerStyle={styles.card}>
-                            <Card.Image source={require('../../Assets/Image/Movie.png')} />
-                            <Text style={styles.summary}>A poor family, the Kims, con their way into becoming the servants of a rich family, the Parks. But their easy life gets complicated when their deception is threatened with exposure.</Text>
-                            <Card.Divider />
-                            <View style={styles.reviewShare}>
-                                <Button
-                                    type='clear'
-                                    icon={
-                                        <Icon name='message-circle' type='feather' />
-                                    }
-                                    title='123'
-                                    titleStyle={{ color: 'black' }}
-                                    onPress={MoveToAllReviews}
-                                >
-                                </Button>
-                                <Button
-                                    type='clear'
-                                    icon={
-                                        <Icon name='share' type='foundation' />
-                                    }
-                                >
-                                </Button>
-                            </View>
-                        </Card>
-                    </TouchableOpacity>
+                    {dataFilm.map((e, i) => {
+                        return (
+                            <TouchableOpacity onPress={() => MoveToDetail(e)}>
+                                <Card containerStyle={styles.card}>
+                                    <Thumbnail
+                                        url={`${e.trailer}`}
+                                        imageWidth={ms(308)}
+                                        onPress={() => {
+                                            try {
+                                                Linking.openURL(`${e.trailer}`)
+                                            }
+                                            catch (error) {
+                                                console.log(error)
+                                            }
+                                        }}
+                                        iconStyle={{ tintColor: "#F2D25B" }}
+                                    />
+                                    <Text style={styles.summary}>{e.synopsis}</Text>
+                                    <Card.Divider />
+                                    <View style={styles.reviewShare}>
+                                        <Button
+                                            type='clear'
+                                            icon={
+                                                <Icon name='message-circle' type='feather' />
+                                            }
+                                            title='123'
+                                            titleStyle={{ color: 'black' }}
+                                            onPress={MoveToAllReviews}
+                                        >
+                                        </Button>
+                                        <Button
+                                            type='clear'
+                                            icon={
+                                                <Icon name='share' type='foundation' />
+                                            }
+                                        >
+                                        </Button>
+                                    </View>
+                                </Card>
+                            </TouchableOpacity>
+                        )
+                    })
+                    }
                 </View>
             </ScrollView >
         </SafeAreaView >
@@ -142,7 +208,6 @@ const styles = StyleSheet.create({
 
     genres: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
         paddingVertical: ms(20),
     },
 
@@ -151,7 +216,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(6),
         paddingVertical: ms(13),
         borderRadius: ms(10),
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: ms(2)
     },
 
     genresText: {
