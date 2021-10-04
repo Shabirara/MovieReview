@@ -1,31 +1,52 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, Image, Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 
-import Tombol from "../../Components/Button";
-import { useNavigation } from "@react-navigation/native";
+import Button from "../../Components/Button";
+import { setTokenToLoginReducer } from "./Redux/action/actionLogins";
+
 import { useDispatch, useSelector } from "react-redux";
-import { loginAction } from "./Redux/AuthAction";
 
 //import styling
 import styles from "./LoginStyle";
 
 export default function Login(props) {
+  //redux
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const [message, setMessage] = useState(null);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
 
-  const onLogin = () => {
-    if (email === "" && password == "") {
-      props.navigation.navigate("Register");
-    } else {
-      Alert.alert("Eror", "Email dan Password Salah");
+  const onLogin = async () => {
+    try {
+      const result = await axios.post(
+        "https://movieapp-glints.herokuapp.com/api/v1/users/signin",
+        { email, password }
+      );
+      if (result.status === 200) {
+        dispatch(setTokenToLoginReducer(result.data.data));
+        props.navigation.navigate("Home");
+      } else {
+        Alert.alert("Login Failed");
+      }
+    } catch (error) {
+      console.log(error, "Login error");
+      console.log(result, "result token");
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Image
         source={require("../../Assets/Image/logo.png")}
         style={styles.logo}
@@ -34,7 +55,9 @@ export default function Login(props) {
       <View>
         <TextInput
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => {
+            setEmail(text);
+          }}
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="white"
@@ -44,7 +67,9 @@ export default function Login(props) {
         {/* {input passsword} */}
         <TextInput
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => {
+            setPassword(text);
+          }}
           style={styles.input}
           placeholder="Password"
           placeholderTextColor="white"
@@ -62,10 +87,11 @@ export default function Login(props) {
 
       <View style={styles.buttonContainer}>
         <View style={styles.viewButton}>
-          <Tombol onPress={onLogin} judul="Sign In" />
+          <Button onPress={onLogin} title="SIGN IN" />
+
           {/* <Tombol onPress={() => props.navigation.navigate('BottomTab')} judul="Emergency Button" /> */}
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

@@ -6,7 +6,7 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 export default function Tombol(props) {
   return (
     <Button
-      title={props.judul}
+      title={props.title}
       titleStyle={styles.textStyle}
       buttonStyle={styles.container}
       containerStyle={styles.shadow}
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: widthPercentageToDP(50),
   },
+
   shadow: {
     elevation: 15,
     width: widthPercentageToDP(50),
