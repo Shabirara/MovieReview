@@ -12,10 +12,6 @@ import {
 } from "react-native";
 import { Button, Overlay, Card, Icon, Rating } from "react-native-elements";
 import { ms } from "react-native-size-matters";
-import { widthPercentageToDP } from "react-native-responsive-screen";
-import posterfilm from "../../Assets/images/PosterFilm.jpg";
-import posterfilm1 from "../../Assets/images/PosterFilm1.jpg";
-import { color } from "react-native-elements/dist/helpers";
 
 const YourReview = () => {
     const [visible, setVisible] = useState(false);
@@ -32,7 +28,7 @@ const YourReview = () => {
                         <Image
                             resizeMode="contain"
                             style={styles.image}
-                            source={posterfilm}
+                            source={{ uri: "https://www.solider.id/sites/default/files/2019-10/WhatsApp%20Image%202019-10-04%20at%2021.50.15.jpeg" }}
                         />
                     </View>
                     {/* end poster image */}
@@ -128,7 +124,7 @@ const YourReview = () => {
                         <Image
                             resizeMode="contain"
                             style={styles.image}
-                            source={posterfilm1}
+                            source={{ uri: "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1630287354/fkitq0nmrco8itouypz9.jpg" }}
                         />
                     </View>
                     {/* end poster image */}

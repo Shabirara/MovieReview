@@ -6,19 +6,12 @@ import { useSelector } from 'react-redux';
 
 export default function AllReviews() {
     const data = useSelector((state) => state.HomeReducer.MovieDetail)
-<<<<<<< HEAD
-=======
     const [user, setUser] = useState([{}])
     const [dataUser, setDataUser] = useState([])
->>>>>>> shabi
 
     return (
         <>
             <ScrollView style={styles.background}>
-<<<<<<< HEAD
-=======
-
->>>>>>> shabi
                 {data.map((e, i) => {
                     return (
                         <Card containerStyle={{ borderRadius: 20 }}>

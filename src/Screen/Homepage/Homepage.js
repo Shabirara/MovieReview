@@ -63,19 +63,11 @@ const Homepage = props => {
         try {
             const res = await axios.get(`https://movieapp-glints.herokuapp.com/api/v1/reviews/movie/${e.id}/7`);
             dispatch(MovieDetail(res.data.data));
-<<<<<<< HEAD
-            props.navigation.navigate('All Reviews')
-        } catch (error) {
-            console.log(error, "errorAllReviews")
-        }
-
-=======
 
             props.navigation.navigate('All Reviews');
         } catch (error) {
             console.log(error, "errorAllReviews");
         }
->>>>>>> shabi
     };
 
     useEffect(() => {
