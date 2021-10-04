@@ -10,10 +10,12 @@ import {
     TouchableOpacity,
     TextInput
 } from "react-native";
-import { Button, Overlay, Card, Icon, Rating } from "react-native-elements";
+import { Button, Overlay, Card, Icon } from "react-native-elements";
+import { Rating } from "react-native-ratings";
 import { ms } from "react-native-size-matters";
 
-const YourReview = () => {
+
+const YourReview = (props) => {
     const [visible, setVisible] = useState(false);
     const toggleOverlay = () => {
         setVisible(!visible);
@@ -43,7 +45,7 @@ const YourReview = () => {
                                 name="star"
                                 color="#FDC600"
                             />
-                            <Text style={styles.ratingNumber}>9/10</Text>
+                            <Text style={styles.ratingNumber}>4/5</Text>
                         </View>
                         <View style={styles.allButton}>
                             <TouchableOpacity
@@ -73,12 +75,12 @@ const YourReview = () => {
                                         tintColor="#FFE7AB"
                                         type="custom"
                                         ratingBackgroundColor="#EBEDF0"
-                                        ratingCount={10}
-                                        startingValue={9}
-                                        readOnly
+                                        ratingCount={5}
+                                        showRating
+                                        startingValue="{3}"
                                     />
                                     <Text style={styles.yourRating}>
-                                        Your rating: 9
+                                        Your rating:
                                     </Text>
                                     <TextInput style={styles.inputReaction} />
                                     <TextInput
@@ -99,6 +101,7 @@ const YourReview = () => {
                                             marginVertical: ms(10)
                                         }}
                                         titleStyle={{ fontWeight: "bold" }}
+                                        onPress={toggleOverlay}
                                     />
                                 </View>
                             </Overlay>
@@ -111,7 +114,7 @@ const YourReview = () => {
                     <Text style={styles.reaction}>Sugoiiiii</Text>
                     <Text style={styles.movieReview}>
                         This Movie should encourage each and every one of us to
-                        become a better person, trear everyone with respect and
+                        become a better person, treat everyone with respect and
                         make each other feel like they belong in this world,
                         instead of making them feel isolated.{" "}
                     </Text>
@@ -139,7 +142,7 @@ const YourReview = () => {
                                 name="star"
                                 color="#FDC600"
                             />
-                            <Text style={styles.ratingNumber}>9/10</Text>
+                            <Text style={styles.ratingNumber}>4/5</Text>
                         </View>
                         <View style={styles.allButton}>
                             <TouchableOpacity
@@ -169,13 +172,12 @@ const YourReview = () => {
                                         tintColor="#FFE7AB"
                                         type="custom"
                                         ratingBackgroundColor="#EBEDF0"
-                                        ratingCount={10}
-                                        startingValue={9}
-                                        readOnly
-                                        imageSize={40}
+                                        ratingCount={5}
+                                        showRating={true}
+                                        startingValue="{3}"
                                     />
                                     <Text style={styles.yourRating}>
-                                        Your rating: 9
+                                        Your rating:
                                     </Text>
                                     <TextInput style={styles.inputReaction} />
                                     <TextInput
@@ -196,6 +198,7 @@ const YourReview = () => {
                                             marginVertical: ms(10)
                                         }}
                                         titleStyle={{ fontWeight: "bold" }}
+                                        onPress={toggleOverlay}
                                     />
                                 </View>
                             </Overlay>

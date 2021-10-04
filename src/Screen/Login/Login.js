@@ -35,7 +35,7 @@ export default function Login(props) {
       );
       if (result.status === 200) {
         dispatch(setTokenToLoginReducer(result.data.data));
-        props.navigation.navigate("Home");
+        props.navigation.navigate("Homepage");
       } else {
         Alert.alert("Login Failed");
       }

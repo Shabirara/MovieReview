@@ -4,9 +4,9 @@
 /* eslint-disable prettier/prettier */
 import axios from 'axios';
 import React, { useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image, Linking } from 'react-native'
-
-import { SearchBar, Card, Icon, Button } from 'react-native-elements';
+import { SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity, Image, Linking, TextInput } from 'react-native'
+import { Rating } from "react-native-ratings";
+import { SearchBar, Card, Icon, Button, Overlay } from 'react-native-elements';
 import { ms } from 'react-native-size-matters';
 import { Thumbnail } from 'react-native-thumbnail-video';
 
@@ -17,7 +17,10 @@ const DetailMovie = props => {
     const [search, setSearch] = useState('');
     const data = useSelector((state) => state.HomeReducer.MovieDetail)
     const dispatch = useDispatch()
-
+    const [visible, setVisible] = useState(false);
+    const toggleOverlay = () => {
+        setVisible(!visible);
+    };
 
     const MoveToAllReviews = async () => {
         try {
@@ -84,7 +87,7 @@ const DetailMovie = props => {
                                             <Text style={styles.perTen}>/5</Text>
                                         </View>
                                     </View>
-                                    <TouchableOpacity style={styles.starDetail}>
+                                    <TouchableOpacity style={styles.starDetail} onPress={toggleOverlay}>
                                         <Icon name='star' color='#979797' />
                                         <Text style={styles.perTen}>Rate this</Text>
                                     </TouchableOpacity>
@@ -115,6 +118,50 @@ const DetailMovie = props => {
                             </Button>
                         </View>
                     </Card>
+                    <Overlay
+                        overlayStyle={styles.editOverlay}
+                        isVisible={visible}
+                        onBackdropPress={toggleOverlay}
+                    >
+                        <View style={styles.overlayReview}>
+                            <Text style={styles.howDoYou}>
+                                How do you think about this movie?
+                            </Text>
+                            <Rating
+                                style={styles.editRating}
+                                tintColor="#FFE7AB"
+                                type="custom"
+                                ratingBackgroundColor="#EBEDF0"
+                                ratingCount={5}
+                                showRating
+                                startingValue="{3}"
+                            />
+                            <Text style={styles.yourRating}>
+                                Your rating:
+                            </Text>
+                            <TextInput style={styles.inputReaction} />
+                            <TextInput
+                                multiline={true}
+                                numberOfLines={4}
+                                style={styles.inputReview}
+                            />
+                            <Button
+                                title="Submit"
+                                buttonStyle={{
+                                    backgroundColor: "black",
+                                    width: ms(120),
+                                    borderColor: "white",
+                                    borderRadius: 16
+                                }}
+                                containerStyle={{
+                                    alignItems: "center",
+                                    marginVertical: ms(10)
+                                }}
+                                titleStyle={{ fontWeight: "bold" }}
+                                onPress={toggleOverlay}
+                            />
+                        </View>
+                    </Overlay>
                 </View>
             </ScrollView >
         </SafeAreaView >
@@ -216,6 +263,52 @@ const styles = StyleSheet.create({
     starDetail: {
         alignItems: 'center',
         marginHorizontal: ms(5)
+    },
+
+    inputReaction: {
+        backgroundColor: "white",
+        marginTop: ms(20),
+        marginBottom: ms(10),
+        borderRadius: ms(10),
+        paddingVertical: ms(4),
+        color: "black",
+        fontWeight: "bold"
+    },
+
+    inputReview: {
+        backgroundColor: "white",
+        borderRadius: ms(10),
+        color: "black",
+        marginBottom: ms(10),
+        height: ms(100),
+        textAlignVertical: "top"
+    },
+
+    editOverlay: {
+        backgroundColor: "transparent"
+    },
+
+    overlayReview: {
+        backgroundColor: "#FFE7AB",
+        paddingVertical: ms(60),
+        borderRadius: ms(20)
+    },
+
+    howDoYou: {
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: ms(20)
+    },
+
+    yourRating: {
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: ms(20),
+        marginTop: ms(14)
+    },
+
+    editRating: {
+        paddingHorizontal: ms(10)
     }
 
 })

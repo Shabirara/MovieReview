@@ -3,7 +3,10 @@ import { Text, View, StyleSheet, Image } from "react-native";
 import { Avatar, Input, Button } from "react-native-elements";
 import { ms } from "react-native-size-matters";
 
-const Profile = () => {
+const Profile = (props) => {
+    const onLogout = () => {
+        props.navigation.navigate("Login");
+    }
     return (
         <View style={styles.fullScreen}>
             <Avatar
@@ -51,6 +54,7 @@ const Profile = () => {
                     marginVertical: ms(40)
                 }}
                 titleStyle={{ color: "black", fontWeight: "bold" }}
+                onPress={onLogout}
             />
         </View>
     );

@@ -50,7 +50,7 @@ function Register(props) {
       );
       console.log(result, "result signup");
       if (result.status === 200) {
-        props.navigation.navigate("signup sukses");
+        props.navigation.navigate("Login");
       } else {
         Alert.alert("signup failed");
       }

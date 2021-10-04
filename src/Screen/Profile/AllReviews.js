@@ -1,13 +1,17 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
-import { Icon, Card, Avatar, Text } from 'react-native-elements'
+import { View, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { Icon, Card, Avatar, Text, Overlay, Button } from 'react-native-elements'
+import { Rating } from 'react-native-ratings';
+import { ms } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 
 export default function AllReviews() {
     const data = useSelector((state) => state.HomeReducer.MovieDetail)
-    const [user, setUser] = useState([{}])
-    const [dataUser, setDataUser] = useState([])
+    const [visible, setVisible] = useState(false);
+    const toggleOverlay = () => {
+        setVisible(!visible);
+    };
 
     return (
         <>
@@ -23,9 +27,9 @@ export default function AllReviews() {
 
                                     <View style={styles.review}>
                                         <Icon name='star' color='#F0CA02' />
-                                        <Text style={styles.userReview}>{e.rating * 2}</Text>
-                                        <Text style={styles.perTen}>/10</Text>
-                                        <Text h2 style={styles.title}>Review</Text>
+                                        <Text style={styles.userReview}>{e.rating}</Text>
+                                        <Text style={styles.perTen}>/5</Text>
+                                        <Text h2 style={styles.title}>Stars</Text>
 
                                     </View>
 
@@ -33,6 +37,51 @@ export default function AllReviews() {
                                         <Text>Reviewer: </Text>
                                         <Text style={styles.user}>{e.User.fullName}</Text>
                                     </View>
+
+                                    <Overlay
+                                        overlayStyle={styles.editOverlay}
+                                        isVisible={visible}
+                                        onBackdropPress={toggleOverlay}
+                                    >
+                                        <View style={styles.overlayReview}>
+                                            <Text style={styles.howDoYou}>
+                                                How do you think about this movie?
+                                            </Text>
+                                            <Rating
+                                                style={styles.editRating}
+                                                tintColor="#FFE7AB"
+                                                type="custom"
+                                                ratingBackgroundColor="#EBEDF0"
+                                                ratingCount={5}
+                                                showRating
+                                                startingValue="{3}"
+                                            />
+                                            <Text style={styles.yourRating}>
+                                                Your rating:
+                                            </Text>
+                                            <TextInput style={styles.inputReaction} />
+                                            <TextInput
+                                                multiline={true}
+                                                numberOfLines={4}
+                                                style={styles.inputReview}
+                                            />
+                                            <Button
+                                                title="Submit"
+                                                buttonStyle={{
+                                                    backgroundColor: "black",
+                                                    width: ms(120),
+                                                    borderColor: "white",
+                                                    borderRadius: 16
+                                                }}
+                                                containerStyle={{
+                                                    alignItems: "center",
+                                                    marginVertical: ms(10)
+                                                }}
+                                                titleStyle={{ fontWeight: "bold" }}
+                                                onPress={toggleOverlay}
+                                            />
+                                        </View>
+                                    </Overlay>
 
                                 </View>
 
@@ -45,7 +94,7 @@ export default function AllReviews() {
                 })}
 
             </ScrollView>
-            <TouchableOpacity style={styles.fab}>
+            <TouchableOpacity onPress={toggleOverlay} style={styles.fab}>
                 <Icon name='add' size={60} color='#FEC100' />
             </TouchableOpacity>
         </>
@@ -115,34 +164,55 @@ const styles = StyleSheet.create({
         backgroundColor: '#824E00',
         borderRadius: 100,
     },
+
+    editOverlay: {
+        backgroundColor: "transparent"
+    },
+
+    inputReaction: {
+        backgroundColor: "white",
+        marginTop: ms(20),
+        marginBottom: ms(10),
+        borderRadius: ms(10),
+        paddingVertical: ms(4),
+        color: "black",
+        fontWeight: "bold"
+    },
+
+    inputReview: {
+        backgroundColor: "white",
+        borderRadius: ms(10),
+        color: "black",
+        marginBottom: ms(10),
+        height: ms(100),
+        textAlignVertical: "top"
+    },
+
+    editOverlay: {
+        backgroundColor: "transparent"
+    },
+
+    overlayReview: {
+        backgroundColor: "#FFE7AB",
+        paddingVertical: ms(60),
+        borderRadius: ms(20)
+    },
+
+    howDoYou: {
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: ms(20)
+    },
+
+    yourRating: {
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: ms(20),
+        marginTop: ms(14)
+    },
+
+    editRating: {
+        paddingHorizontal: ms(10)
+    }
 });
 
-// {dataFilm?.map((value, index) => (
-//   <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 20 }} key={index}>
-//       <Image
-//           source={{ uri: `https://image.tmdb.org/t/p/original${value.poster_path}` }}
-//           style={{ width: 150, height: 150, resizeMode: "cover", borderRadius: 20 }}
-//       />
-
-//       <View
-//           style={{ justifyContent: 'center', width: '45%', resizeMode: "contain" }}
-//       >
-//           <Text style={{ color: "white", fontSize: 20, flexShrink: 1 }}> {value.original_title} </Text>
-//           <Text style={{ color: "white", fontSize: 10, opacity: 0.5, flexShrink: 1 }} > ({value.release_date}) </Text>
-//           <Rating />
-//       </View>
-//   </View>
-// ))}
-
-{/* <FAB
-        style={styles.fab}
-        large
-        icon={
-          <Icon
-            name="add"
-            size={50}
-            color="#FDC100"
-          />
-        }
-        color="#824E00"
-      /> */}
