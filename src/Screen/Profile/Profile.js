@@ -14,7 +14,7 @@ const Profile = (props) => {
                 size={"xlarge"}
                 rounded
                 source={{
-                    uri: "https://randomuser.me/api/portraits/women/57.jpg"
+                    uri: "https://i.ytimg.com/vi/1Ne1hqOXKKI/maxresdefault.jpg"
                 }}
             >
                 <Avatar.Accessory style={styles.avatarIcon} size={40} />
