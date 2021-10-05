@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import {
   View,
@@ -9,21 +10,24 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
+import { useDispatch, useSelector } from "react-redux";
+
 import styles from "../Register/RegisterStyle";
 import { Avatar } from "react-native-elements";
 
 import { launchImageLibrary } from "react-native-image-picker";
 import { moderateScale } from "react-native-size-matters";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 function Register(props) {
   // console.log("props", props);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const [profilePicture, setprofilePicture] = useState({});
+  const [message, setMessage] = useState("");
+
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const changePhoto = () => {
     launchImageLibrary({ maxHeight: 300, maxWidth: 300 }, (res) => {
@@ -38,13 +42,20 @@ function Register(props) {
     });
   };
 
-  const onSubmit = () => {
-    // console.log("nav");
-    if (username === "" && email === "" && password === "") {
-    } else if (password === email) {
-      props.navigation.navigate("HomePage");
-    } else {
-      Alert.alert("Error", "Password masih salah");
+  const onSignUp = async () => {
+    try {
+      const result = await axios.post(
+        "https://movieapp-glints.herokuapp.com/api/v1/users/signup",
+        { email, password, fullName }
+      );
+      console.log(result, "result signup");
+      if (result.status === 200) {
+        props.navigation.navigate("Login");
+      } else {
+        Alert.alert("signup failed");
+      }
+    } catch (error) {
+      console.log(error, "error");
     }
   };
 
@@ -76,17 +87,9 @@ function Register(props) {
           <Text style={styles.warnText}>{message}</Text>
 
           <TextInput
-            onChangeText={(text) => setName(text)}
-            value={name}
-            placeholder="Name"
-            placeholderTextColor="#EFBF7F"
-            style={styles.formInput}
-          />
-
-          <TextInput
-            onChangeText={(text) => setUsername(text)}
-            value={username}
-            placeholder="Username"
+            onChangeText={(text) => setFullName(text)}
+            value={fullName}
+            placeholder="Fullname"
             placeholderTextColor="#EFBF7F"
             style={styles.formInput}
           />
@@ -108,7 +111,7 @@ function Register(props) {
             secureTextEntry
           />
           <View style={styles.centerPos}>
-            <TouchableOpacity onPress={onSubmit} style={styles.mainButton}>
+            <TouchableOpacity onPress={onSignUp} style={styles.mainButton}>
               <Text style={styles.buttonText}>SIGN UP</Text>
             </TouchableOpacity>
           </View>

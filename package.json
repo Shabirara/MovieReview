@@ -24,6 +24,7 @@
     "react-native-fast-image": "^8.5.8",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-picker": "^4.1.1",
+    "react-native-ratings": "^8.1.0",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.7.2",
@@ -34,7 +35,8 @@
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "redux-saga": "^1.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

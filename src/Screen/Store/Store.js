@@ -1,6 +1,6 @@
 import { allReducers } from "./allReducers";
 import { createStore, applyMiddleware } from "redux";
-import Logger from "redux-logger";
+import logger from "redux-logger";
 import { persistReducer, persistStore } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import createSaga from "redux-saga";
@@ -9,7 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const persistConfig = {
   key: "reactpro",
   storage: AsyncStorage,
-  timeout: null
+  timeout: null,
 };
 
 // const SagaMiddleware = createSaga();
@@ -19,6 +19,8 @@ const reducerPersist = persistReducer(persistConfig, allReducers);
 export const Store = createStore(
   reducerPersist,
   {},
+  applyMiddleware(logger)
+
   // applyMiddleware(Logger, SagaMiddleware)
 );
 
