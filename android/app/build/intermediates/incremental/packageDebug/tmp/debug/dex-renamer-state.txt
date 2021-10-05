@@ -1,4 +1,4 @@
-#Sat Sep 25 20:29:03 SGT 2021
+#Mon Oct 04 15:55:59 SGT 2021
 path.3=14/classes.dex
 path.2=0/classes.dex
 path.1=0/classes.dex
@@ -7,10 +7,10 @@ path.0=classes.dex
 renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
-base.4=/home/spc/Mini Project/mini-project-team-a/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex
+base.4=C\:\\Mini Project\\mini-project-team-a\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
 renamed.0=classes.dex
-base.3=/home/spc/Mini Project/mini-project-team-a/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
-base.2=/home/spc/Mini Project/mini-project-team-a/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.1=/home/spc/Mini Project/mini-project-team-a/android/app/build/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
-base.0=/home/spc/Mini Project/mini-project-team-a/android/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+base.3=C\:\\Mini Project\\mini-project-team-a\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.2=C\:\\Mini Project\\mini-project-team-a\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.1=C\:\\Mini Project\\mini-project-team-a\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
+base.0=C\:\\Mini Project\\mini-project-team-a\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 path.4=15/classes.dex
