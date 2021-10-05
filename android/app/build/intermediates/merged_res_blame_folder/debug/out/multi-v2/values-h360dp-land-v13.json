@@ -1,10 +1,17 @@
 {
     "logs": [
         {
+<<<<<<< HEAD
             "outputFile": "/home/shabi/Desktop/RNCLASS-B14/MiniProject - MovReact/mini-project-team-a/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h360dp-land-v13/values-h360dp-land-v13.xml",
             "map": [
                 {
                     "source": "/home/shabi/.gradle/caches/transforms-3/d9a3ea39a981c7afa2f0112a00415ec8/transformed/material-1.1.0/res/values-h360dp-land-v13/values-h360dp-land-v13.xml",
+=======
+            "outputFile": "C:\\Mini Project\\mini-project-team-a\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h360dp-land-v13\\values-h360dp-land-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\deart\\.gradle\\caches\\transforms-3\\d9a3ea39a981c7afa2f0112a00415ec8\\transformed\\material-1.1.0\\res\\values-h360dp-land-v13\\values-h360dp-land-v13.xml",
+>>>>>>> fc6d63c7d692bfe3b1bd0fd713fe9784e56865c6
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
